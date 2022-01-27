@@ -5,7 +5,7 @@ require_once("db.php");
 
 define("MODELS", BASE_PATH . "/src/models/");
 
-define("CONTROLLERS", BASE_PATH . "/src/models/");
+define("CONTROLLERS", BASE_PATH . "/src/controllers/");
 
 define("LIBS", BASE_PATH . "/src/libs/");
 
