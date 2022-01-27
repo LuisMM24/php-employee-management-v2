@@ -1,8 +1,8 @@
 <?php
+// Start session
+session_start();
 function authUser()
 {
-    // Start session
-    session_start();
 
     // Get form input values
     $email = $_POST["email"];
@@ -37,12 +37,9 @@ function checkUser(string $email, string $pass)
 
 function checkSession()
 {
-    // Start session
-    session_start();
-
     $urlFile = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
 
-    if ($urlFile == "index.php") {
+    if ($urlFile == "index.php" || $urlFile == "php-employee-management-v2") {
 
         if (isset($_SESSION["email"])) {
             header("Location:./src/dashboard.php");
@@ -66,8 +63,6 @@ function checkSession()
 
 function destroySession()
 {
-    // Start session
-    session_start();
 
     // Unset all session variables
     unset($_SESSION);

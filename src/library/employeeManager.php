@@ -1,22 +1,23 @@
 <?php
 
 // Reads the JSON file and returns and array
-function getEmployees() {
-    return json_decode(file_get_contents('http://localhost/Assembler/php-employee-management-v1/resources/employees.json'), true); // returns an associative array
+function getEmployees()
+{
+    return json_decode(file_get_contents('http://localhost/Assembler/php-employee-management-v2/resources/employees.json'), true); // returns an associative array
 }
 
 function addEmployee(array $newEmployee)
 {
     $employees = getEmployees();
-    array_push($employees,$newEmployee);
+    array_push($employees, $newEmployee);
     file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
 }
 
 function deleteEmployee(string $id)
 {
     $employees = getEmployees();
-    foreach ($employees as $i => $employee){
-        if ($employee["id"] == $id){
+    foreach ($employees as $i => $employee) {
+        if ($employee["id"] == $id) {
             unset($employees[$i]);
             $employees = array_values($employees);
         }
@@ -60,17 +61,17 @@ function getEmployee(string $id)
 
 function removeAvatar($id)
 {
-// TODO implement it
+    // TODO implement it
 }
 
 function getQueryStringParameters()
 {
-// TODO implement it
+    // TODO implement it
 }
 
 function getNextIdentifier(array $employeesCollection)
 {
     $lastId = end($employeesCollection)["id"];
-    $lastIdplus1 = intval($lastId)+1;
+    $lastIdplus1 = intval($lastId) + 1;
     return $lastIdplus1;
 }

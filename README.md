@@ -34,7 +34,7 @@ npm instal
 
 In order to complete/execute this project, the set up of a server environment and PHP interpreter is needed. You need to have at least PHP v7.4 or above to develop this project, which is capable of running PHP to its latest version.
 
-- XAMPP with PHP >= 7.4
+- XAMPP with PHP >= 8.0.10
 
 ## Technologies used
 
@@ -70,9 +70,9 @@ This project could be used to manage employee information.
 
 This repository is based on a past delivery from master's students:
 
-👤 **Víctor Martínez**
+👤 **Iván Gunchev**
 
-👤 **Ismael Vázquez**
+👤 **Adrián Serrano**
 
 ---
 
