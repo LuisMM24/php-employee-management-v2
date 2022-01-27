@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS employees;
+CREATE DATABASE IF NOT EXISTS employees;
+USE employees;
+
 CREATE TABLE users(
   userId         INT            NOT NULL,
   birth_date     DATE           NOT NULL,
