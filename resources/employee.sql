@@ -1,3 +1,4 @@
+/*    EMPLOYEE TABLE    */
 DROP DATABASE IF EXISTS employees;
 CREATE DATABASE IF NOT EXISTS employees;
 USE employees;
@@ -9,6 +10,17 @@ CREATE TABLE employees(
   last_name      VARCHAR(15)    NOT NULL,
   gender         ENUM ('M','F') NOT NULL,
   PRIMARY KEY (userId)
+);
+
+
+/*    USER TABLE    */
+
+CREATE TABLE users (
+    userId        INT              NOT NULL,
+    name          VARCHAR(16)      NOT NULL,
+    password    VARCHAR(255)       NOT NULL,
+    email       VARCHAR(255)       NOT NULL,
+    PRIMARY KEY (userId)
 );
 
 /*    TABLE OF EMPLOYEE */
@@ -29,3 +41,4 @@ INSERT INTO employees (userId, birth_date, first_name, last_name, gender) values
 ('13', '1992-05-16', 'Paola', 'Fer', 'F'),
 ('14', '1989-08-18', 'Isma', 'Rodriguez', 'M'),
 ('15', '1988-12-28', 'Gonzalo', 'Cachon', 'M');
+
