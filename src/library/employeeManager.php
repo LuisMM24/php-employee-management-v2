@@ -2,7 +2,7 @@
 
 // Reads the JSON file and returns and array
 function getEmployees() {
-    return json_decode(file_get_contents('http://localhost/Assembler/php-employee-management-v1/resources/employees.json'), true); // returns an associative array
+    return json_decode(file_get_contents('http://localhost/php-employee-management-v1/resources/employees.json'), true); // returns an associative array
 }
 
 function addEmployee(array $newEmployee)
