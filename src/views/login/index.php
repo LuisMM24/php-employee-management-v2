@@ -32,6 +32,13 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         </form>
     </main>
+    <!-- Preguntar si esto aqui es correcto o mejor pasar a script.js -->
+    <script>
+        //if alert don't have  msg
+        if ($(".alert").eq(0).text() == "") {
+            $(".alert").eq(0).hide()
+        }
+    </script>
 </body>
 
 </html>

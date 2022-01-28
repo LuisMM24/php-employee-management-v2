@@ -43,6 +43,9 @@ class Router
                 } else {
                     $this->viewError();
                 }
+            } else {
+                //render the controller view
+                $controller->render();
             }
         } else {
             $this->viewError();

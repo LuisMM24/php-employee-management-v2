@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <?= $_SESSION["email"] ?>
   <!-- Nav -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light container-xl">
     <div class="container-fluid">
@@ -28,7 +29,7 @@
           </li>
         </ul>
       </div>
-      <a class="link-primary" href="./library/loginController.php?logout=1">Log out</a>
+      <a class="link-primary" href="<?= BASE_URL ?>login/logOut">Log out</a>
     </div>
   </nav>
 

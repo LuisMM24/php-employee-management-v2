@@ -16,11 +16,10 @@ class Login extends Controller
         parent::__construct();
         //we set in empty string to don't pass isset in index view
         $this->view->setAlert("", "");
-        // Start session
-        session_start();
     }
     public function render()
     {
+        $this->session->checkSessionLogin();
         $this->view->render("login/index");
     }
     public function authUser()
@@ -35,7 +34,7 @@ class Login extends Controller
             if (password_verify($pass, $userData["password"])) {
                 // we usually save in a session variable user id and other user data like name, surname....
                 $_SESSION["email"] = $email;
-                header("location:" . BASE_URL . "dashboard/showEmployees");
+                header("location:" . BASE_URL . "dashboard");
                 // when we check that the email and password is correct, we redirect the user to the dashboard 
             } else {
                 $this->view->setAlert("danger", "Incorrect password");
@@ -45,5 +44,16 @@ class Login extends Controller
             $this->view->setAlert("danger", "Incorrect email");
             $this->render();
         }
+    }
+    public function logOut()
+    {
+        $this->session->destroySession();
+        $this->view->setAlert("info", "You logged out correctly");
+        $this->render();
+    }
+    public function notLogged()
+    {
+        $this->view->setAlert("warning", "You need to log in!");
+        $this->render();
     }
 }

@@ -14,4 +14,8 @@ class View
     {
         $this->alert = ["type" => $type, "message" => $msg];
     }
+    public function location($site)
+    {
+        header("location:" . BASE_URL . "$site");
+    }
 }

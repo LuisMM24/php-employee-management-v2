@@ -24,21 +24,4 @@ class LoginModel extends Model
             return [];
         }
     }
-    public function logOut()
-    {
-    }
-}
-
-function checkLoginInfo()
-{
-    if (isset($_SESSION["loginInfo"])) {
-        $infoText = $_SESSION["loginInfo"];
-        unset($_SESSION["loginInfo"]);
-        return ["type" => "primary", "text" => $infoText];
-    }
-}
-
-function checkLogout()
-{
-    if (isset($_GET["logout"]) && !isset($_SESSION["email"])) return ["type" => "primary", "text" => "Logout succesful"];
 }
