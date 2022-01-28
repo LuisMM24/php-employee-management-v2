@@ -1,4 +1,10 @@
 <?php
+class LoginModel extends model
+{
+    public function __construct()
+    {
+    }
+}
 // Start session
 session_start();
 function authUser()
