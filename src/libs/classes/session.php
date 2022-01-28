@@ -8,16 +8,16 @@ class Session
         if ($urlFile == "index.php" || $urlFile == "php-employee-management-v2") {
 
             if (isset($_SESSION["email"])) {
-                header("Location:./src/dashboard.php");
+                header("Location:dashboard/showEmployees");
             } else {
-                //Check for session error
-                if ($alert = checkLoginError()) return $alert;
+                // //Check for session error
+                // if ($alert = checkLoginError()) return $alert;
 
-                // Check for info session variable
-                if ($alert = checkLoginInfo()) return $alert;
+                // // Check for info session variable
+                // if ($alert = checkLoginInfo()) return $alert;
 
-                // Check for logout
-                if ($alert = checkLogout()) return $alert;
+                // // Check for logout
+                // if ($alert = checkLogout()) return $alert;
             }
         } else {
             if (!isset($_SESSION["email"])) {

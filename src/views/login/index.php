@@ -16,8 +16,8 @@
 <body>
 
     <main class="form-signin">
-        <form action="login/authUser" method="POST">
-            <img src="./assets/img/assembler.png" class="w-100 my-5" alt="Assembler School">
+        <form action="<?= BASE_URL ?>login/authUser" method="POST">
+            <img src="<?= ASSETS ?>img/assembler.png" class="w-100 my-5" alt="Assembler School">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
@@ -28,7 +28,7 @@
                 <input value="123456" name="pass" type="password" class="form-control" id="floatingPassword" placeholder="Password" title="Assemb13r">
                 <label for="floatingPassword">Password</label>
             </div>
-            <!-- <?= ($alert) ? "<div class='alert alert-$alert[type] role='alert'>$alert[text]</div>" : "" ?> -->
+            <div class='alert alert-<?= $this->alert["type"] ?>'><?= $this->alert["message"] ?></div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         </form>
     </main>

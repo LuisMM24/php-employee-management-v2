@@ -14,7 +14,8 @@ class Login extends Controller
     public function __construct()
     {
         parent::__construct();
-
+        //we set in empty string to don't pass isset in index view
+        $this->view->setAlert("", "");
         // Start session
         session_start();
     }
@@ -36,11 +37,12 @@ class Login extends Controller
                 header("location:" . BASE_URL . "dashboard/showEmployees");
                 // when we check that the email and password is correct, we redirect the user to the dashboard 
             } else {
-                echo "incorrect password";
+                $this->view->setAlert("danger", "Incorrect password");
+                $this->render();
             }
         } else {
-            echo "Incorrect email";
-            //$_SESSION["loginError"] = "Wrong email or password!";
+            $this->view->setAlert("danger", "Incorrect email");
+            $this->render();
         }
     }
 }

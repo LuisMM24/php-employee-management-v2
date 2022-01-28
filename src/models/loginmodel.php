@@ -24,17 +24,8 @@ class LoginModel extends Model
             return [];
         }
     }
-}
-
-
-
-// Error messages
-function checkLoginError()
-{
-    if (isset($_SESSION["loginError"])) {
-        $errorText = $_SESSION["loginError"];
-        unset($_SESSION["loginError"]);
-        return ["type" => "danger", "text" => $errorText];
+    public function logOut()
+    {
     }
 }
 
