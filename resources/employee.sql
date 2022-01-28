@@ -1,7 +1,7 @@
 /*    EMPLOYEE TABLE    */
-DROP DATABASE IF EXISTS employees;
-CREATE DATABASE IF NOT EXISTS employees;
-USE employees;
+DROP DATABASE IF EXISTS manage_employees;
+CREATE DATABASE IF NOT EXISTS manage_employees;
+USE manage_employees;
 
 CREATE TABLE employees(
   userId         INT            NOT NULL,
@@ -25,8 +25,8 @@ CREATE TABLE users (
 
 /*   INSERT TABLE USER    */
 
-INSERT INTO USER (name, email, password) VALUES
-('admin', 'admin@assambler.com', '$2y$10$nuh1LEwFt7Q2/wz9/CmTJO91stTBS4cRjiJYBY3sVCARnllI.wzBC');
+INSERT INTO users (name, email, password) VALUES
+('admin', 'admin@assemblerschool.com', '$2y$10$nuh1LEwFt7Q2/wz9/CmTJO91stTBS4cRjiJYBY3sVCARnllI.wzBC');
 
 /*    TABLE OF EMPLOYEE */
 

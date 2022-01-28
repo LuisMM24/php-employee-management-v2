@@ -3,7 +3,7 @@
 
 define("HOST", "localhost");
 
-define("DB", "employees");
+define("DB", "manage_employees");
 
 define("USER", "root");
 

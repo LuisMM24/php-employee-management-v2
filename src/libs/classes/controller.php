@@ -9,12 +9,14 @@ class Controller
 
     public function loadModel($model)
     {
-        $url = MODELS . $model . "model.php";
+        $url = MODELS . $model . "Model.php";
 
         //if file exist, return model selected
         if (file_exists($url)) {
             require_once $url;
+
             $modelName = $model . "Model";
+
             $this->model = new $modelName;
         }
     }

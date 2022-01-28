@@ -16,7 +16,7 @@
 <body>
 
     <main class="form-signin">
-        <form action="./src/library/loginController.php?login=1" method="POST">
+        <form action="login/authUser" method="POST">
             <img src="./assets/img/assembler.png" class="w-100 my-5" alt="Assembler School">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 

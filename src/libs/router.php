@@ -25,8 +25,8 @@ class Router
 
             if ($nparams > 1) {
                 $method = $this->url[1];
+                if (function_exists($controller->$method())) {
 
-                if (function_exists($method)) {
                     if ($nparams > 2) {
                         //no matter how many params are you passing, it will pass to the function too
                         $param = [];
