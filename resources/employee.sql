@@ -23,6 +23,11 @@ CREATE TABLE users (
     PRIMARY KEY (userId)
 );
 
+/*   INSERT TABLE USER    */
+
+INSERT INTO USER (name, email, password) VALUES
+('admin', 'admin@assambler.com', '');
+
 /*    TABLE OF EMPLOYEE */
 
 INSERT INTO employees (userId, birth_date, first_name, last_name, gender) values
