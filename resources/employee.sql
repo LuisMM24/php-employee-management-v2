@@ -26,7 +26,7 @@ CREATE TABLE users (
 /*   INSERT TABLE USER    */
 
 INSERT INTO USER (name, email, password) VALUES
-('admin', 'admin@assambler.com', '');
+('admin', 'admin@assambler.com', '$2y$10$nuh1LEwFt7Q2/wz9/CmTJO91stTBS4cRjiJYBY3sVCARnllI.wzBC');
 
 /*    TABLE OF EMPLOYEE */
 
