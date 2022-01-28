@@ -50,9 +50,9 @@
       </thead>
       <!-- Loop through all employees in the JSON and create a new row in the table body -->
       <tbody id="employees-table">
-        <?php foreach ($employees as $employee) : ?>
+        <?php foreach ($this->employees as $employee) : ?>
           <tr>
-            <td><?= $employee["name"] ?></td>
+            <td><?= $employee["first_name"] ?></td>
             <td><?= $employee["email"] ?></td>
             <td><?= $employee["age"] ?></td>
             <td><?= $employee["streetAddress"] ?></td>

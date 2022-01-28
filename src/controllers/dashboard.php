@@ -9,7 +9,7 @@ class Dashboard extends Controller
     }
     public function showEmployees()
     {
-        $this->model->get();
+        $this->view->employees = $this->model->get();
         $this->view->render("dashboard/index");
     }
 }

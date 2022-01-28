@@ -8,14 +8,12 @@ class DashboardModel extends Model
     public function get(): array
     {
         //Gets All employees
-        $employees = [];
         try {
             $query = $this->db->connect()->query(
                 "SELECT * FROM employees"
             );
-            while ($items = $query->fetch()) {
-                $employees["id"] = $items["id"];
-            }
+            $employees = $query->fetchAll();
+            return $employees;
         } catch (PDOException $e) {
             return [];
         }

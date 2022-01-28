@@ -13,4 +13,4 @@ define("TEMPLATES", BASE_PATH . "/assets/templates/");
 
 define("VIEWS", BASE_PATH . "/src/views/");
 
-define("ASSETS", BASE_URL . "/assets/");
+define("ASSETS", BASE_URL . "assets/");
