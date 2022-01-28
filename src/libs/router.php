@@ -6,7 +6,7 @@ class Router
     public function __construct()
     {
         $this->setUrl();
-
+        //if url don't pass any parameters
         if (empty($this->url[0])) { //TODO o sesion no iniciada o controller == login
             $fileController = CONTROLLERS . "login.php";
             require_once($fileController);
@@ -15,12 +15,15 @@ class Router
             $controller->render("login/index");
             return false;
         }
-
+        //save url controller passed in parameter 0
         $fileController = CONTROLLERS . $this->url[0] . ".php";
         if (file_exists($fileController)) {
+            //load controller
             require_once $fileController;
+            //instance of controller and load models
             $controller = new $this->url[0];
             $controller->loadModel($this->url[0]);
+            //get size of url params
             $nparams = sizeof($this->url);
 
             if ($nparams > 1) {

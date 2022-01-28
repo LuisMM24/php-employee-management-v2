@@ -33,7 +33,7 @@ class Login extends Controller
             if (password_verify($pass, $userData["password"])) {
                 // we usually save in a session variable user id and other user data like name, surname....
                 $_SESSION["email"] = $email;
-                header("location:" . BASE_URL . "dashboard");
+                header("location:" . BASE_URL . "dashboard/showEmployees");
                 // when we check that the email and password is correct, we redirect the user to the dashboard 
             } else {
                 echo "incorrect password";
