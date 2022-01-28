@@ -28,8 +28,8 @@ class Router
 
             if ($nparams > 1) {
                 $method = $this->url[1];
-                if (function_exists($controller->$method())) {
 
+                if (method_exists($controller, $method)) {
                     if ($nparams > 2) {
                         //no matter how many params are you passing, it will pass to the function too
                         $param = [];
@@ -41,9 +41,17 @@ class Router
                         $controller->{$method}();
                     }
                 } else {
+                    $this->viewError();
                 }
             }
+        } else {
+            $this->viewError();
         }
+    }
+    public function viewError()
+    {
+        require_once(CONTROLLERS . "error.php");
+        $this->error = new Err();
     }
     public function setUrl()
     {

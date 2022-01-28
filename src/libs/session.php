@@ -1,28 +1,26 @@
 <?php
 class Session
 {
+    public function __construct()
+    {
+        echo "session class";
+    }
     public function checkSession()
     {
-        $urlFile = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+        $this->url = isset($_GET["url"]) ? $_GET["url"] : null;
+        $this->url = rtrim($this->url, "/");
+        $this->url = explode("/", $this->url);
 
         if ($urlFile == "index.php" || $urlFile == "php-employee-management-v2") {
 
             if (isset($_SESSION["email"])) {
-                header("Location:dashboard/showEmployees");
-            } else {
-                // //Check for session error
-                // if ($alert = checkLoginError()) return $alert;
-
-                // // Check for info session variable
-                // if ($alert = checkLoginInfo()) return $alert;
-
-                // // Check for logout
-                // if ($alert = checkLogout()) return $alert;
+                header("Location:" . BASE_URL . "dashboard/showEmployees");
             }
         } else {
             if (!isset($_SESSION["email"])) {
+                print_r("logico");
                 $_SESSION["loginError"] = "You don't have permission to enter the dashboard. Please Login.";
-                header("Location:../index.php");
+                header("Location:" . BASE_URL);
             }
         }
     }

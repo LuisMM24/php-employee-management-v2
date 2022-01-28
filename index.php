@@ -5,6 +5,8 @@ require_once("config/constants.php");
 require_once(LIBS . "database.php");
 //controller class template
 require_once(LIBS . "classes/controller.php");
+//session class
+require_once(LIBS . "session.php");
 //view class
 require_once(LIBS . "classes/view.php");
 //model class template
