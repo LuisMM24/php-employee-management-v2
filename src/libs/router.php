@@ -7,19 +7,19 @@ class Router
     {
         $this->setUrl();
         //if url don't pass any parameters
-        if (empty($this->url[0])) { //TODO o sesion no iniciada o controller == login
-            $fileController = CONTROLLERS . "login.php";
-            require_once($fileController);
+        if (empty($this->url[0])) {
+            $routeController = CONTROLLERS . "login.php";
+            require_once($routeController);
             $controller = new Login();
             $controller->loadModel($this->url[0]);
             $controller->render("login/index");
             return false;
         }
         //save url controller passed in parameter 0
-        $fileController = CONTROLLERS . $this->url[0] . ".php";
-        if (file_exists($fileController)) {
+        $routeController = CONTROLLERS . $this->url[0] . ".php";
+        if (file_exists($routeController)) {
             //load controller
-            require_once $fileController;
+            require_once $routeController;
             //instance of controller and load models
             $controller = new $this->url[0];
             $controller->loadModel($this->url[0]);
@@ -33,14 +33,17 @@ class Router
                     if ($nparams > 2) {
                         //no matter how many params are you passing, it will pass to the function too
                         $param = [];
-                        for ($i = 2; $i < $nparam; $i++) {
+                        for ($i = 2; $i < $nparams; $i++) {
                             array_push($param, $this->url[$i]);
                         }
+                        //execute method with param
                         $controller->{$method}($param);
                     } else {
+                        //Execute only method
                         $controller->{$method}();
                     }
                 } else {
+                    //fail to load method
                     $this->viewError();
                 }
             } else {
@@ -48,6 +51,7 @@ class Router
                 $controller->render();
             }
         } else {
+            //failed to load view
             $this->viewError();
         }
     }
@@ -58,6 +62,7 @@ class Router
     }
     public function setUrl()
     {
+        //transform url in parts.
         $this->url = isset($_GET["url"]) ? $_GET["url"] : null;
         $this->url = rtrim($this->url, "/");
         $this->url = explode("/", $this->url);

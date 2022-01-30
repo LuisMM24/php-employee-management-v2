@@ -2,8 +2,20 @@
 
 require_once("./employeeManager.php");
 
-class Employee
+class Employee extends Controller
 {
+  public $id;
+  public $first_name;
+  public $last_name;
+  public $email;
+  public $gender;
+  public $city;
+  public $streetAddress;
+  public $state;
+  public $age;
+  public $postalCode;
+  public $phoneNumber;
+
   public function __construct()
   {
   }

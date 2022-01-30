@@ -3,16 +3,19 @@ class Session
 {
     public function __construct()
     {
-        session_start();
     }
+    //if try to go Login section being logged
     public function checkSessionLogin()
     {
+        session_start();
         if (isset($_SESSION["email"])) {
             header("Location:" . BASE_URL . "dashboard");
         }
     }
+    //if try to go dashboard section without log in
     public function checkSessionDashboard()
     {
+        session_start();
         if (!isset($_SESSION["email"])) {
             header("Location:" . BASE_URL . "login/notLogged");
         }
@@ -21,6 +24,7 @@ class Session
 
     public function destroySession()
     {
+        session_start();
         // Unset all session variables
         unset($_SESSION);
         // Destroy session cookie
