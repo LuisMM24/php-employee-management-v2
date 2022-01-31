@@ -2,7 +2,7 @@
 
 const urlDelete = window.location + "/deleteEmployee/";
 const urlAdd = window.location + "/addEmployee";
-const urlUpdate = window.location + "/updateEmployee/";
+const urlUpdate = window.location + "/updateEmployeeDash/";
 //setting dynamic
 const urlGetEmployee = window.location + "/getEmployee/";
 // Initialise Update and Delete buttons
@@ -97,19 +97,24 @@ function displayNewEmployee(employee) {
     <td>${employee.postalCode}</td>
     <td>${employee.phoneNumber}</td>
     <td class="d-flex justify-content-between">
-      <a href='./library/employeeController.php?v=view&id=${employee.id}' class="btn btn-outline-info"><i class="far fa-eye"></i></a>
+      <a href='employee/consultEmployee/${employee.id}' class="btn btn-outline-info"><i class="far fa-eye"></i></a>
       <button data-update="${employee.id}" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i></button>
-      <button data-delete="${employee.id}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+      <button data-delete="${employee.id}" data-toggle="modal" href="#deleteModal" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
     </td>
   `
   employeeTable.appendChild(row)
   document.querySelector("#inputFormContainer").remove();
-
+  //select btns
+  const editBtn = document.querySelector(`button[data-update="${employee.id}"]`);
+  const deleteBtn = document.querySelector(`button[data-delete="${employee.id}"]`);
   // Initialise newly added Update and Delete buttons
-  deleteEmployee()
-  updateBtnListener();
+  deleteBtn.addEventListener("click", () => {
+    deleteId = deleteBtn.getAttribute("data-delete");
+  })
+  editBtn.addEventListener("click", () => {
+    fetchEmployeeData(editBtn)
+  })
 }
-
 // DELETE EMPLOYEE
 function deleteEmployee() {
 
@@ -132,11 +137,14 @@ function removeDeletedEmployee(id) {
 // Delete confirmation modal
 const deleteBtnModal = document.querySelector("#deleteBtnModal");
 let deleteId;
+console.log(deleteId);
 deleteBtnModal.addEventListener("click", () => {
   fetch(urlDelete + deleteId, {
       method: "DELETE",
     })
-    .then(response => console.log(response.text()))
+    .then(response => {
+      console.log(response.text())
+    })
     .then(data => {
       removeDeletedEmployee(deleteId);
     });

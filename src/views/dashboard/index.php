@@ -15,7 +15,7 @@
       <a class="navbar-brand" href="#">
         <img src="<?= ASSETS ?>img/logo.jpg" alt="" width="25">
       </a>
-      <a class="navbar-brand" href="#">Employees Management</a>
+      <a class="navbar-brand" href="">Employees Management</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -62,7 +62,7 @@
             <td><?= $employee["postalCode"] ?></td>
             <td><?= $employee["phoneNumber"] ?></td>
             <td class="d-flex justify-content-between">
-              <a href="./library/employeeController.php?v=view&id=<?= $employee["id"] ?>" class="btn btn-outline-info"><i class="far fa-eye" data-viewId=<?= $employee["id"] ?>></i></a>
+              <a href="<?= BASE_URL ?>employee/consultEmployee/<?= $employee["id"] ?>" class="btn btn-outline-info"><i class="far fa-eye" data-viewId=<?= $employee["id"] ?>></i></a>
               <button data-update='<?= $employee["id"] ?>' id="editBtn" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i></button>
               <a data-delete='<?= $employee["id"] ?>' class="btn btn-outline-danger" href="#deleteModal" data-toggle="modal"><i class="far fa-trash-alt"></i></a>
             </td>

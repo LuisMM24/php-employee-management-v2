@@ -1,65 +1,102 @@
 <?php
+
 class Employee extends Controller
 {
-  public $id;
-  public $first_name;
-  public $last_name;
-  public $email;
-  public $gender;
-  public $city;
-  public $streetAddress;
-  public $state;
-  public $age;
-  public $postalCode;
-  public $phoneNumber;
+    public $response;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->session->checkSessionDashboard();
+    }
+    public function render()
+    {
+        $this->view->employees = $this->model->get();
+        $this->view->render("dashboard/index");
+    }
 
-  public function __construct()
-  {
-  }
+    public function getEmployee($param = null)
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
-  public function addEmployee()
-  {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $newEmployeeData = trim(file_get_contents("php://input"));
-      $newEmployee = json_decode($newEmployeeData, true);
-      $employees = getEmployees();
-      $id = getNextIdentifier($employees);
-      $lastId = ["id" => $id, "streetAddress" => "", "phoneNumber" => "", "gender" => "", "lastName" => ""];
-      $employee = array_merge($lastId, $newEmployee);
-      addEmployee($employee);
-      echo json_encode($employee);
-    }
-  }
-  public function updateEmployee()
-  {
-    // UPDATE EMPLOYEE
-    if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-      if (isset($_GET["update"])) {
-        $updateEmployeeData = trim(file_get_contents("php://input"));
-        $updatedEmployee = json_decode($updateEmployeeData, true);
-        $employees = getEmployees();
-        $employeeId = $_GET["id"];
-        updateEmployee($updatedEmployee, $employeeId);
-      }
-    }
-  }
-  public function getEmployee()
-  {
-    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
-      $employeeId = $_GET["id"];
-      $employee = getEmployee($employeeId);
-      echo json_encode($employee);
-    }
-  }
+            if ($param !== null) {
+                $id = $param[0];
+                $this->employee = $this->model->getById($id);
+            }
 
-  // VIEW EMPLOYEE DETAILS in the Employee section
-  public function detailsEmployee()
-  {
-    if (isset($_GET["v"])) {
-      if ($_GET["v"] == "view") {
-        $id = $_GET["id"];
-        header("Location:../employee.php?v=view&id=$id");
-      }
+
+            if (!empty($this->employee)) {
+                //object to array and json encode 
+                $this->employee = json_encode($this->employee);
+
+                echo $this->employee;
+            }
+        }
     }
-  }
+    public function updateEmployee($param = null)
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if ($param !== null) {
+                $id = $param[0];
+                $this->employee = $_POST;
+                print_r($_POST);
+                $this->response = $this->model->update($this->employee, $id);
+                if ($this->response === true) {
+                    $this->view->location("employee");
+                }
+            }
+        }
+    }
+    public function updateEmployeeDash($param = null)
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+            if ($param !== null) {
+                $id = $param[0];
+                $this->employee = json_decode(file_get_contents('php://input'), true);
+                $this->response = $this->model->updateFromDash($this->employee, $id);
+                if ($this->response === true) {
+                    echo "true";
+                }
+            }
+        }
+    }
+    public function deleteEmployee($param = null)
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+            if ($param !== null) {
+                $id = $param[0];
+                $this->model->delete($id);
+                var_dump($this->model->delete($id));
+            }
+        }
+    }
+
+    public function addEmployee()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->employee = json_decode(file_get_contents("php://input"), true);
+            $this->request = $this->model->add($this->employee);
+            if (isset($this->request)) {
+                $this->setResponse("success");
+                $this->response["id"] = $this->request;
+                $this->response = json_encode($this->response);
+                echo $this->response;
+            }
+        }
+    }
+    public function setResponse($status)
+    {
+        $this->response = ["status" => "$status"];
+    }
+    public function consultEmployee($params = null)
+    {
+
+        if ($params !== null) {
+            $id = $params[0];
+            $this->view->employee = $this->model->getById($id);
+            $this->view->render("employee/index");
+        } else {
+            require_once(CONTROLLERS . "error.php");
+            $this->error = new Err();
+        }
+    }
 }

@@ -10,7 +10,7 @@ class Session
     {
 
         if (isset($_SESSION["email"])) {
-            header("Location:" . BASE_URL . "dashboard");
+            header("Location:" . BASE_URL . "employee");
         }
     }
     //if try to go dashboard section without log in

@@ -1,82 +1,171 @@
 <?php
-class EmployeeModel extends Model{
-    public function __construct(){
+class EmployeeModel extends Model
+{
+    public function __construct()
+    {
         parent::__construct();
     }
-
-// Reads the JSON file and returns and array
-function getEmployees()
-{
-    return json_decode(file_get_contents('http://localhost/Assembler/php-employee-management-v2/resources/employees.json'), true); // returns an associative array
-}
-
-function addEmployee(array $newEmployee)
-{
-    $employees = getEmployees();
-    array_push($employees, $newEmployee);
-    file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
-}
-
-// function deleteEmployee(string $id)
-// {
-//     $employees = getEmployees();
-//     foreach ($employees as $i => $employee) {
-//         if ($employee["id"] == $id) {
-//             unset($employees[$i]);
-//             $employees = array_values($employees);
-//         }
-//     }
-//     file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
-// }
-
-function updateEmployee(array $updateEmployee, string $id)
-{
-    $employees = getEmployees();
-    foreach ($employees as $i => $employee) {
-        if ($employee["id"] == $id) {
-            $employees[$i] = array_merge($employee, $updateEmployee);
-            echo json_encode($employees[$i]);
+    public function get(): array
+    {
+        //Gets All employees
+        try {
+            $query = $this->db->connect()->query(
+                "SELECT * FROM employees"
+            );
+            $employees = $query->fetchAll();
+            return $employees;
+        } catch (PDOException $e) {
+            return [];
         }
     }
-    file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
-}
-function updateEmployeeSync(array $updateEmployee, string $id)
-{
-    $employees = getEmployees();
-    foreach ($employees as $i => $employee) {
-        if ($employee["id"] == $id) {
-            $employees[$i] = array_merge($employee, $updateEmployee);
-            echo json_encode($employees[$i]);
-        }
-    }
-    file_put_contents('./../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
-}
-
-function getEmployee(string $id)
-{
-    $employees = getEmployees();
-    foreach ($employees as $employee) {
-        if ($employee["id"] == $id) {
+    public function getById($id)
+    {
+        //Gets one employee by id
+        $employee = [];
+        try {
+            $query = $this->db->connect()->prepare(
+                "SELECT * FROM employees WHERE id=:id"
+            );
+            $query->execute([
+                ":id" => $id
+            ]);
+            while ($items = $query->fetch()) {
+                $employee = [
+                    "id" => $items["id"],
+                    "first_name" => $items["first_name"],
+                    "last_name" => $items["last_name"],
+                    "email" => $items["email"],
+                    "gender" => $items["gender"],
+                    "city" => $items["city"],
+                    "streetAddress" => $items["streetAddress"],
+                    "state" => $items["state"],
+                    "age" =>  $items["age"],
+                    "postalCode" =>  $items["postalCode"],
+                    "phoneNumber" =>  $items["phoneNumber"]
+                ];
+            }
             return $employee;
+        } catch (PDOException $e) {
+            return [];
         }
     }
-    return null;
-}
+    public function update($employee, $id)
+    {
+        try {
+            $query = $this->db->connect()->prepare(
+                "UPDATE employees SET 
+                    first_name = :first_name,
+                    last_name = :last_name,
+                    gender = :gender,
+                     email=:email,
+                     age=:age,
+                     streetAddress=:streetAddress,
+                     city=:city,
+                     postalCode=:postalCode,
+                     phoneNumber=:phoneNumber
+                    WHERE id = :id"
+            );
+            $query->execute([
+                ":id" => $id,
+                ":first_name" => $employee["first_name"],
+                ":last_name" => $employee["last_name"],
+                ":gender" => $employee["gender"],
+                ":email" => $employee["email"],
+                ":age" => $employee["age"],
+                ":streetAddress" => $employee["streetAddress"],
+                ":city" => $employee["city"],
+                ":postalCode" => $employee["postalCode"],
+                ":phoneNumber" => $employee["phoneNumber"]
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+    public function updateFromDash($employee, $id)
+    {
+        try {
+            $query = $this->db->connect()->prepare(
+                "UPDATE employees SET first_name = :first_name,
+                     email=:email,
+                     age=:age,
+                     streetAddress=:streetAddress,
+                     city=:city,
+                     postalCode=:postalCode,
+                     phoneNumber=:phoneNumber
+                    WHERE id = :id"
+            );
+            $query->execute([
+                ":id" => $id,
+                ":first_name" => $employee["name"],
+                ":email" => $employee["email"],
+                ":age" => $employee["age"],
+                ":streetAddress" => $employee["streetAddress"],
+                ":city" => $employee["city"],
+                ":postalCode" => $employee["postalCode"],
+                ":phoneNumber" => $employee["phoneNumber"]
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
+    public function delete($id)
+    {
+        try {
+            $query = $this->db->connect()->prepare("DELETE FROM employees WHERE id = :id");
+            $query->execute([":id" => $id]);
+            return true;
+        } catch (PDOException $e) {
+            return $e;
+        }
+    }
 
-function removeAvatar($id)
-{
-    // TODO implement it
-}
-
-function getQueryStringParameters()
-{
-    // TODO implement it
-}
-
-function getNextIdentifier(array $employeesCollection)
-{
-    $lastId = end($employeesCollection)["id"];
-    $lastIdplus1 = intval($lastId) + 1;
-    return $lastIdplus1;
-}
+    public function add($employee)
+    {
+        try {
+            $query = $this->db->connect()->prepare(
+                "INSERT INTO employees (first_name,email,age,streetAddress,city,state,postalCode,phoneNumber) VALUES(
+                     :first_name,
+                     :email,
+                     :age,
+                     :streetAddress,
+                     :city,
+                     :state,
+                     :postalCode,
+                     :phoneNumber
+                     );"
+            );
+            $query->execute([
+                ":first_name" => $employee["name"],
+                ":email" => $employee["email"],
+                ":age" => $employee["age"],
+                ":streetAddress" => $employee["streetNumber"],
+                ":city" => $employee["city"],
+                ":state" => $employee["state"],
+                ":postalCode" => $employee["postalCode"],
+                ":phoneNumber" => $employee["phoneNumber"]
+            ]);
+            $id = $this->getLastInsert();
+            return $id;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    //this is used for display the id of last user, and all info,
+    private function getLastInsert()
+    {
+        $query = $this->db->connect()->prepare(
+            "SELECT id FROM employees  ORDER BY id DESC LIMIT 1;"
+        );
+        try {
+            $query->execute();
+            while ($item = $query->fetch()) {
+                $id =  $item["id"];
+            };
+            return $id;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
