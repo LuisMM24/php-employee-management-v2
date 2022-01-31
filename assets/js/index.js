@@ -141,16 +141,20 @@ function updateBtnListener() {
   const updateButtons = document.querySelectorAll("button[data-update]");
   updateButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-      const employeeId = btn.getAttribute("data-update");
-      fetch(urlGetEmployee + employeeId, {
-          method: "GET"
-        })
-        .then(response => response.json())
-        .then(data => {
-          updateRow(data);
-        })
+      fetchEmployeeData(btn);
     })
   })
+}
+
+function fetchEmployeeData(btn) {
+  const employeeId = btn.getAttribute("data-update");
+  fetch(urlGetEmployee + employeeId, {
+      method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+      updateRow(data);
+    })
 }
 
 function updateRow(employee, UpdateId) {
@@ -216,7 +220,7 @@ function updateEmployeeFetch(e, id) {
       }
     })
 }
-
+//TODO NO FUNCIONAN BIEN LOS LISTENERS
 // Displays the updated employee in the main table
 function displayUpdatedEmployee(employee, id) {
   // Creates a row with the newly updated data that is returned from the fetch
@@ -244,7 +248,9 @@ function displayUpdatedEmployee(employee, id) {
   document.querySelector("#inputFormContainer").remove();
 
   // Initialise Update and Delete buttons
-  deleteEmployee();
-  updateBtnListener();
   currentRow.remove();
+  const editBtn = document.querySelector(`button[data-update="${id}"]`);
+  editBtn.addEventListener("click", () => {
+    fetchEmployeeData(editBtn)
+  })
 }
