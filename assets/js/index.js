@@ -145,9 +145,9 @@ function updateBtnListener() {
       fetch(urlGetEmployee + employeeId, {
           method: "GET"
         })
-        .then(response => console.log(response.text()))
+        .then(response => response.json())
         .then(data => {
-          console.log(data);
+          updateRow(data);
         })
     })
   })
@@ -157,7 +157,8 @@ function updateRow(employee, UpdateId) {
   const row = document.createElement("tr");
   row.id = "inputFormContainer"
   row.innerHTML =
-    `<td><form action="" method="post" id="form2"><input value = '${employee.name}' type="text" name="name" placeholder = "name" class="form-control" required></form></td>
+    `
+    <td><form action="" method="post" id="form2"><input value = '${employee.first_name}' type="text" name="name" placeholder = "name" class="form-control" required></td>
     <td><input value = '${employee.email}' form="form2" type="text" name="email" class="form-control" required></td>
     <td><input value = '${employee.age}' form="form2" type="text" name="age" class="form-control" required></td>
     <td><input value = '${employee.streetAddress}' form="form2" type="text" name="streetAddress" class="form-control" required></td>
@@ -166,16 +167,17 @@ function updateRow(employee, UpdateId) {
     <td><input value = '${employee.postalCode}' form="form2" type="text" name="postalCode" class="form-control" required></td>
     <td><input value = '${employee.phoneNumber}' form="form2" type="text" name="phoneNumber"class="form-control" required></td>
     <td class="d-flex justify-content-around">
-      <a id="btn-cancel-update"class="btn btn-secondary" href="#"><i class="fas fa-window-close"></i></a>
-      <button form="form2" type="submit" id="btn-success"class="btn btn-success"><i class="fas fa-check"></i></button>
-    </td>`
+      <a id="btn-cancel-update"class="btn btn-secondary"><i class="fas fa-window-close"></i></a>
+      <button form="form2" type="submit" id="btn-success" class="btn btn-success"><i class="fas fa-check"></i></button>
+      </form></td>
+    `
   const currentRow = document.querySelector(`button[data-update="${employee.id}"]`).parentElement.parentElement
   currentRow.insertAdjacentElement("beforebegin", row);
   currentRow.style.display = "none";
 
   let updateEmployeeForm = document.querySelector("#form2");
   updateEmployeeForm.addEventListener("submit", (e) => {
-    updateEmployeeFetch(e, UpdateId)
+    updateEmployeeFetch(e, employee.id)
   })
   let cancelUpdateEmployee = document.querySelector("#btn-cancel-update")
   cancelUpdateEmployee.addEventListener("click", () => {
@@ -196,23 +198,27 @@ function updateEmployeeFetch(e, id) {
   const updateEmployeeData = new FormData(updateEmployeeForm);
 
   // create object from FormData with the data of the updated employee
-  const object = {};
+  const employee = {};
   updateEmployeeData.forEach(function (value, key) {
-    object[key] = value;
+    employee[key] = value;
   });
-  const updateEmployeeJSON = JSON.stringify(object);
+  const updateEmployeeJSON = JSON.stringify(employee);
 
   // Sends the data from the updated employee form to the employeeController.php and gets an object as a response
   fetch(urlUpdate + id, {
       body: updateEmployeeJSON,
       method: 'PUT',
     })
-    .then(response => response.text())
-    .then(data => displayUpdatedEmployee(JSON.parse(data)))
+    .then(response => {
+      if (response.status == 200) {
+        displayUpdatedEmployee(employee, id)
+        console.log(response);
+      }
+    })
 }
 
 // Displays the updated employee in the main table
-function displayUpdatedEmployee(employee) {
+function displayUpdatedEmployee(employee, id) {
   // Creates a row with the newly updated data that is returned from the fetch
   let row = document.createElement("tr")
   row.innerHTML = `
@@ -225,13 +231,13 @@ function displayUpdatedEmployee(employee) {
   <td>${employee.postalCode}</td>
   <td>${employee.phoneNumber}</td>
   <td class="d-flex justify-content-between">
-    <a href='./library/employeeController.php?v=view&id=${employee.id}' class="btn btn-sm btn-outline-info"><i class="far fa-eye"></i></a>
-    <button data-update="${employee.id}" class="btn btn-sm btn-outline-secondary"><i class="fas fa-user-edit"></i></button>
-    <button data-delete="${employee.id}" class="btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+    <a href='./library/employeeController.php?v=view&id=${id}' class="btn btn-outline-info"><i class="far fa-eye"></i></a>
+    <button data-update="${id}" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i></button>
+    <button data-delete="${id}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
   </td>
   `
 
-  const currentRow = document.querySelector(`button[data-update="${employee.id}"]`).parentElement.parentElement
+  const currentRow = document.querySelector(`button[data-update="${id}"]`).parentElement.parentElement
   currentRow.insertAdjacentElement("beforebegin", row);
 
   // Removes the input form

@@ -1,4 +1,5 @@
 <?php
+require_once(CONTROLLERS . "employee.php");
 class DashboardModel extends Model
 {
     public function __construct()
@@ -45,6 +46,34 @@ class DashboardModel extends Model
             return $employee;
         } catch (PDOException $e) {
             return [];
+        }
+    }
+    public function update($employee, $id)
+    {
+        try {
+            $query = $this->db->connect()->prepare(
+                "UPDATE employees SET first_name = :first_name,
+                     email=:email,
+                     age=:age,
+                     streetAddress=:streetAddress,
+                     city=:city,
+                     postalCode=:postalCode,
+                     phoneNumber=:phoneNumber
+                    WHERE id = :id"
+            );
+            $query->execute([
+                ":id" => $id,
+                ":first_name" => $employee["name"],
+                ":email" => $employee["email"],
+                ":age" => $employee["age"],
+                ":streetAddress" => $employee["streetAddress"],
+                ":city" => $employee["city"],
+                ":postalCode" => $employee["postalCode"],
+                ":phoneNumber" => $employee["phoneNumber"]
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return $e;
         }
     }
 }

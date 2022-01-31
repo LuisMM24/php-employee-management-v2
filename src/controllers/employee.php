@@ -1,7 +1,4 @@
 <?php
-
-require_once("./employeeManager.php");
-
 class Employee extends Controller
 {
   public $id;

@@ -17,11 +17,31 @@ class Dashboard extends Controller
     public function getEmployee($param = null)
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $id = $param[0];
-            $this->employee = $this->model->getById($id);
-            var_dump($this->employee);
+
+            if ($param !== null) {
+                $id = $param[0];
+                $this->employee = $this->model->getById($id);
+            }
+
+
             if (!empty($this->employee)) {
-                return $this->employee;
+                //object to array and json encode 
+                $this->employee = json_encode((array)$this->employee);
+
+                echo $this->employee;
+            }
+        }
+    }
+    public function updateEmployee($param = null)
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+            if ($param !== null) {
+                $id = $param[0];
+                $this->employee = json_decode(file_get_contents('php://input'), true);
+                $this->response = $this->model->update($this->employee, $id);
+                if ($this->response === true) {
+                    echo "true";
+                }
             }
         }
     }
