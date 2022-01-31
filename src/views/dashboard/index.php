@@ -22,10 +22,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+            <a class="nav-link active" aria-current="page">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Employee</a>
+            <a class="nav-link">Employee</a>
           </li>
         </ul>
       </div>

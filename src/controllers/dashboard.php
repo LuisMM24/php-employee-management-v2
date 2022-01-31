@@ -45,4 +45,11 @@ class Dashboard extends Controller
             }
         }
     }
+    public function addEmployee()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->employee = json_decode(file_get_contents("php://input"), true);
+            $this->response = $this->model->add($this->employee);
+        }
+    }
 }

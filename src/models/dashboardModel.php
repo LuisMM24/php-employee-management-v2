@@ -76,4 +76,32 @@ class DashboardModel extends Model
             return $e;
         }
     }
+    public function add($employee)
+    {
+        try {
+            $query = $this->db->connect()->prepare(
+                "INSERT INTO employees (first_name,email,age,streetAddress,city,postalCode,phoneNumber) VALUES(
+                     :first_name,
+                     :email,
+                     :age,
+                     :streetAddress,
+                     :city,
+                     :postalCode,
+                     :phoneNumber
+                     );"
+            );
+            $query->execute([
+                ":first_name" => $employee["name"],
+                ":email" => $employee["email"],
+                ":age" => $employee["age"],
+                ":streetAddress" => $employee["streetNumber"],
+                ":city" => $employee["city"],
+                ":postalCode" => $employee["postalCode"],
+                ":phoneNumber" => $employee["phoneNumber"]
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

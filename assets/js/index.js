@@ -32,7 +32,7 @@ function createNewRow() {
     <td><input form="form1" type="text" name="postalCode" class="form-control" required></td>
     <td><input form="form1" type="text" name="phoneNumber" class="form-control" required></td>
     <td class="d-flex justify-content-around">
-      <a id="btn-cancel"class="btn btn-secondary" href="#"><i class="fas fa-window-close"></i></a>
+      <a id="btn-cancel"class="btn btn-secondary"><i class="fas fa-window-close"></i></a>
       <button form="form1" type="submit" id="btn-success"class="btn btn-success"><i class="fas fa-check"></i></button>
     </td>`
 
@@ -62,19 +62,23 @@ function addEmployeeFetch(e) {
   const addEmployeeData = new FormData(addEmployeeForm);
 
   // Creates object from FormData with all the data for the new employee
-  const object = {};
+  const employee = {};
   addEmployeeData.forEach(function (value, key) {
-    object[key] = value;
+    employee[key] = value;
   });
-  const addEmployeeJSON = JSON.stringify(object);
+  const addEmployeeJSON = JSON.stringify(employee);
 
   // Sends the data from the Add New Employee form to the employeeController.php and gets an object as a response
   fetch(urlAdd, {
       body: addEmployeeJSON,
       method: 'POST',
     })
-    .then(response => response.text())
-    .then(data => displayNewEmployee(JSON.parse(data)))
+    .then(response => {
+      if (response.ok) {
+        displayNewEmployee(employee);
+      }
+
+    })
 }
 
 function displayNewEmployee(employee) {
@@ -216,7 +220,6 @@ function updateEmployeeFetch(e, id) {
     .then(response => {
       if (response.status == 200) {
         displayUpdatedEmployee(employee, id)
-        console.log(response);
       }
     })
 }
