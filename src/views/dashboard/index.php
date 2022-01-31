@@ -8,7 +8,6 @@
 </head>
 
 <body>
-  <?= $_SESSION["email"] ?>
   <!-- Nav -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light container-xl">
     <div class="container-fluid">
@@ -25,7 +24,7 @@
             <a class="nav-link active" aria-current="page">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href= "<?= BASE_URL ?>employee/newEmployee">Employee</a>
+            <a class="nav-link" href="<?= BASE_URL ?>employee/newEmployee">Employee</a>
           </li>
         </ul>
       </div>

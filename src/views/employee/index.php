@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href= "<?= BASE_URL ?>employee">Dashboard</a>
+                        <a class="nav-link" aria-current="page" href="<?= BASE_URL ?>employee">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Employee</a>
@@ -36,7 +36,7 @@
 
     <!-- Employee details and update  -->
     <?php
-    if(!isset($this->employee)){
+    if (!isset($this->employee)) {
         $this->method = "createEmployee";
         $this->employee = [];
         $this->employee["first_name"] = "";
@@ -49,8 +49,8 @@
         $this->employee["streetAddress"] = "";
         $this->employee["age"] = "";
         $this->employee["phoneNumber"] = "";
-    }else{
-        $this->method = "updateEmployee/$this->employee['id']";
+    } else {
+        $this->method = "updateEmployee/" . $this->employee['id'];
     }
     ?>
     <main class="container container-xl my-5">

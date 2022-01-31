@@ -124,6 +124,10 @@ class EmployeeModel extends Model
     public function add($employee)
     {
         try {
+            if (!isset($employee["last_name"])) {
+                $employee["last_name"] = "empty";
+                $employee["gender"] = "empty";
+            }
             $query = $this->db->connect()->prepare(
                 "INSERT INTO employees (first_name,last_name,email,age,streetAddress,city,gender,state,postalCode,phoneNumber) VALUES(
                      :first_name,

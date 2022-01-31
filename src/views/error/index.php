@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1><?= $this->text ?></h1>
+    <h1>This view is not loaded in the database</h1>
 </body>
 
 </html>

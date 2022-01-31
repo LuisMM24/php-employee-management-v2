@@ -1,5 +1,4 @@
 <?php
-
 class Employee extends Controller
 {
     public $response;
@@ -92,17 +91,22 @@ class Employee extends Controller
         if ($params !== null) {
             $id = $params[0];
             $this->view->employee = $this->model->getById($id);
-            $this->view->render("employee/index");
+            if (!empty($this->view->employee)) {
+                $this->view->render("employee/index");
+            } else {
+                $this->view->render("error/index");
+            }
         } else {
-            require_once(CONTROLLERS . "error.php");
-            $this->error = new Err();
+            $this->view->render("error/index");
         }
     }
-    public function newEmployee(){
+    public function newEmployee()
+    {
         $this->view->render("employee/index");
     }
-    public function createEmployee(){
-        if($_SERVER["REQUEST_METHOD"] == 'POST'){
+    public function createEmployee()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             $this->employee = $_POST;
             $this->view->render("employee/index");
             $this->setResponse("success");
