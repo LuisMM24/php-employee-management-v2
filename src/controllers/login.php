@@ -32,7 +32,6 @@ class Login extends Controller
         //if email is not incorrect
         if (!empty($userData)) {
             if (password_verify($pass, $userData["password"])) {
-                session_start();
                 // we usually save in a session variable user id and other user data like name, surname....
                 $_SESSION["email"] = $email;
                 header("location:" . BASE_URL . "dashboard");

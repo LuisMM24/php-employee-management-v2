@@ -25,14 +25,14 @@ function createNewRow() {
   row.innerHTML = `
     <td><form action="" method="post" id="form1"><input type="text" name="name" class="form-control" required></form></td>
     <td><input form="form1" type="text" name="email" class="form-control" required></td>
-    <td><input form="form1" type="text" name="age" class="form-control" required></td>
-    <td><input form="form1" type="text" name="streetNumber" class="form-control" required></td>
+    <td><input form="form1" type="number" name="age" class="form-control" required></td>
+    <td><input form="form1" type="number" name="streetNumber" class="form-control" required></td>
     <td><input form="form1" type="text" name="city" class="form-control" required></td>
     <td><input form="form1" type="text" name="state" class="form-control" required></td>
-    <td><input form="form1" type="text" name="postalCode" class="form-control" required></td>
-    <td><input form="form1" type="text" name="phoneNumber" class="form-control" required></td>
+    <td><input form="form1" type="number" name="postalCode" class="form-control" required></td>
+    <td><input form="form1" type="number" name="phoneNumber" class="form-control" required></td>
     <td class="d-flex justify-content-around">
-      <a id="btn-cancel"class="btn btn-secondary" href="#"><i class="fas fa-window-close"></i></a>
+      <a id="btn-cancel"class="btn btn-secondary"><i class="fas fa-window-close"></i></a>
       <button form="form1" type="submit" id="btn-success"class="btn btn-success"><i class="fas fa-check"></i></button>
     </td>`
 
@@ -62,19 +62,25 @@ function addEmployeeFetch(e) {
   const addEmployeeData = new FormData(addEmployeeForm);
 
   // Creates object from FormData with all the data for the new employee
-  const object = {};
+  const employee = {};
   addEmployeeData.forEach(function (value, key) {
-    object[key] = value;
+    employee[key] = value;
   });
-  const addEmployeeJSON = JSON.stringify(object);
+  const addEmployeeJSON = JSON.stringify(employee);
 
   // Sends the data from the Add New Employee form to the employeeController.php and gets an object as a response
   fetch(urlAdd, {
       body: addEmployeeJSON,
       method: 'POST',
     })
-    .then(response => response.text())
-    .then(data => displayNewEmployee(JSON.parse(data)))
+    .then(response => response.json())
+    .then(data => {
+      //if data passed gives a success
+      if (data["status"] == "success") {
+        employee.id = data["id"];
+        displayNewEmployee(employee);
+      }
+    })
 }
 
 function displayNewEmployee(employee) {
@@ -85,7 +91,7 @@ function displayNewEmployee(employee) {
     <td>${employee.name}</td>
     <td>${employee.email}</td>
     <td>${employee.age}</td>
-    <td>${employee.streetAddress}</td>
+    <td>${employee.streetNumber}</td>
     <td>${employee.city}</td>
     <td>${employee.state}</td>
     <td>${employee.postalCode}</td>
@@ -142,16 +148,20 @@ function updateBtnListener() {
   const updateButtons = document.querySelectorAll("button[data-update]");
   updateButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-      const employeeId = btn.getAttribute("data-update");
-      fetch(urlGetEmployee + employeeId, {
-          method: "GET"
-        })
-        .then(response => response.json())
-        .then(data => {
-          updateRow(data);
-        })
+      fetchEmployeeData(btn);
     })
   })
+}
+
+function fetchEmployeeData(btn) {
+  const employeeId = btn.getAttribute("data-update");
+  fetch(urlGetEmployee + employeeId, {
+      method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+      updateRow(data);
+    })
 }
 
 function updateRow(employee, UpdateId) {
@@ -213,11 +223,9 @@ function updateEmployeeFetch(e, id) {
     .then(response => {
       if (response.status == 200) {
         displayUpdatedEmployee(employee, id)
-        console.log(response);
       }
     })
 }
-
 // Displays the updated employee in the main table
 function displayUpdatedEmployee(employee, id) {
   // Creates a row with the newly updated data that is returned from the fetch
@@ -245,7 +253,9 @@ function displayUpdatedEmployee(employee, id) {
   document.querySelector("#inputFormContainer").remove();
 
   // Initialise Update and Delete buttons
-  deleteEmployee();
-  updateBtnListener();
   currentRow.remove();
+  const editBtn = document.querySelector(`button[data-update="${id}"]`);
+  editBtn.addEventListener("click", () => {
+    fetchEmployeeData(editBtn)
+  })
 }

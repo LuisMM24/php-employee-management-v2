@@ -86,4 +86,52 @@ class DashboardModel extends Model
         return $e;
     }
 }
+
+    public function add($employee)
+    {
+        try {
+            $query = $this->db->connect()->prepare(
+                "INSERT INTO employees (first_name,email,age,streetAddress,city,state,postalCode,phoneNumber) VALUES(
+                     :first_name,
+                     :email,
+                     :age,
+                     :streetAddress,
+                     :city,
+                     :state,
+                     :postalCode,
+                     :phoneNumber
+                     );"
+            );
+            $query->execute([
+                ":first_name" => $employee["name"],
+                ":email" => $employee["email"],
+                ":age" => $employee["age"],
+                ":streetAddress" => $employee["streetNumber"],
+                ":city" => $employee["city"],
+                ":state" => $employee["state"],
+                ":postalCode" => $employee["postalCode"],
+                ":phoneNumber" => $employee["phoneNumber"]
+            ]);
+            $id = $this->getLastInsert();
+            return $id;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    //this is used for display the id of last user, and all info,
+    private function getLastInsert()
+    {
+        $query = $this->db->connect()->prepare(
+            "SELECT id FROM employees  ORDER BY id DESC LIMIT 1;"
+        );
+        try {
+            $query->execute();
+            while ($item = $query->fetch()) {
+                $id =  $item["id"];
+            };
+            return $id;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
