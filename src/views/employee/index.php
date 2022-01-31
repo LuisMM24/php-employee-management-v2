@@ -16,14 +16,14 @@
             <a class="navbar-brand" href="#">
                 <img src="../assets/img/logo.jpg" alt="" width="25">
             </a>
-            <a class="navbar-brand" href="#">Employees Management</a>
+            <a class="navbar-brand" href="">Employees Management</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./dashboard.php">Dashboard</a>
+                        <a class="nav-link" aria-current="page" href= "<?= BASE_URL ?>employee">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Employee</a>
@@ -35,13 +35,31 @@
     </nav>
 
     <!-- Employee details and update  -->
+    <?php
+    if(!isset($this->employee)){
+        $this->method = "createEmployee";
+        $this->employee = [];
+        $this->employee["first_name"] = "";
+        $this->employee["last_name"] = "";
+        $this->employee["email"] = "";
+        $this->employee["city"] = "";
+        $this->employee["state"] = "";
+        $this->employee["postalCode"] = "";
+        $this->employee["gender"] = "";
+        $this->employee["streetAddress"] = "";
+        $this->employee["age"] = "";
+        $this->employee["phoneNumber"] = "";
+    }else{
+        $this->method = "updateEmployee/$this->employee['id']";
+    }
+    ?>
     <main class="container container-xl my-5">
         <div class="card">
             <div class="card-header">
                 <h3>Employee details: <b><?= $this->employee["first_name"] . " " . $this->employee["last_name"] ?></b></h3>
             </div>
             <div class="card-body">
-                <form action="<?= BASE_URL ?>employee/updateEmployee/<?= $this->employee["id"] ?>" method="POST" enctype="multipart/form">
+                <form action="<?= BASE_URL . 'employee/' . $this->method ?>" method="POST" enctype="multipart/form">
                     <div class="d-flex justify-content-center">
                         <div class="col-4">
                             <div class="form-group">

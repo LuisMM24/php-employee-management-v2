@@ -38,7 +38,6 @@ class Employee extends Controller
             if ($param !== null) {
                 $id = $param[0];
                 $this->employee = $_POST;
-                print_r($_POST);
                 $this->response = $this->model->update($this->employee, $id);
                 if ($this->response === true) {
                     $this->view->location("employee");
@@ -97,6 +96,17 @@ class Employee extends Controller
         } else {
             require_once(CONTROLLERS . "error.php");
             $this->error = new Err();
+        }
+    }
+    public function newEmployee(){
+        $this->view->render("employee/index");
+    }
+    public function createEmployee(){
+        if($_SERVER["REQUEST_METHOD"] == 'POST'){
+            $this->employee = $_POST;
+            $this->view->render("employee/index");
+            $this->setResponse("success");
+            $this->model->add($this->employee);
         }
     }
 }
