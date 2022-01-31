@@ -25,7 +25,7 @@
             <a class="nav-link active" aria-current="page">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Employee</a>
+            <a class="nav-link" href= "<?= BASE_URL ?>employee/newEmployee">Employee</a>
           </li>
         </ul>
       </div>

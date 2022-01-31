@@ -125,23 +125,27 @@ class EmployeeModel extends Model
     {
         try {
             $query = $this->db->connect()->prepare(
-                "INSERT INTO employees (first_name,email,age,streetAddress,city,state,postalCode,phoneNumber) VALUES(
+                "INSERT INTO employees (first_name,last_name,email,age,streetAddress,city,gender,state,postalCode,phoneNumber) VALUES(
                      :first_name,
+                     :last_name,
                      :email,
                      :age,
                      :streetAddress,
                      :city,
+                     :gender,
                      :state,
                      :postalCode,
                      :phoneNumber
                      );"
             );
             $query->execute([
-                ":first_name" => $employee["name"],
+                ":first_name" => $employee["first_name"],
+                ":last_name" => $employee["last_name"],
                 ":email" => $employee["email"],
                 ":age" => $employee["age"],
-                ":streetAddress" => $employee["streetNumber"],
+                ":streetAddress" => $employee["streetAddress"],
                 ":city" => $employee["city"],
+                ":gender" => $employee["gender"],
                 ":state" => $employee["state"],
                 ":postalCode" => $employee["postalCode"],
                 ":phoneNumber" => $employee["phoneNumber"]
