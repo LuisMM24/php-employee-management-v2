@@ -2,7 +2,7 @@
 
 class Dashboard extends Controller
 {
-
+    public $response;
     public function __construct()
     {
         parent::__construct();
@@ -49,7 +49,17 @@ class Dashboard extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->employee = json_decode(file_get_contents("php://input"), true);
-            $this->response = $this->model->add($this->employee);
+            $this->request = $this->model->add($this->employee);
+            if (isset($this->request)) {
+                $this->setResponse("success");
+                $this->response["id"] = $this->request;
+                $this->response = json_encode($this->response);
+                echo $this->response;
+            }
         }
+    }
+    public function setResponse($status)
+    {
+        $this->response = ["status" => "$status"];
     }
 }

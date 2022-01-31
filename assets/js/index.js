@@ -25,12 +25,12 @@ function createNewRow() {
   row.innerHTML = `
     <td><form action="" method="post" id="form1"><input type="text" name="name" class="form-control" required></form></td>
     <td><input form="form1" type="text" name="email" class="form-control" required></td>
-    <td><input form="form1" type="text" name="age" class="form-control" required></td>
-    <td><input form="form1" type="text" name="streetNumber" class="form-control" required></td>
+    <td><input form="form1" type="number" name="age" class="form-control" required></td>
+    <td><input form="form1" type="number" name="streetNumber" class="form-control" required></td>
     <td><input form="form1" type="text" name="city" class="form-control" required></td>
     <td><input form="form1" type="text" name="state" class="form-control" required></td>
-    <td><input form="form1" type="text" name="postalCode" class="form-control" required></td>
-    <td><input form="form1" type="text" name="phoneNumber" class="form-control" required></td>
+    <td><input form="form1" type="number" name="postalCode" class="form-control" required></td>
+    <td><input form="form1" type="number" name="phoneNumber" class="form-control" required></td>
     <td class="d-flex justify-content-around">
       <a id="btn-cancel"class="btn btn-secondary"><i class="fas fa-window-close"></i></a>
       <button form="form1" type="submit" id="btn-success"class="btn btn-success"><i class="fas fa-check"></i></button>
@@ -73,11 +73,13 @@ function addEmployeeFetch(e) {
       body: addEmployeeJSON,
       method: 'POST',
     })
-    .then(response => {
-      if (response.ok) {
+    .then(response => response.json())
+    .then(data => {
+      //if data passed gives a success
+      if (data["status"] == "success") {
+        employee.id = data["id"];
         displayNewEmployee(employee);
       }
-
     })
 }
 
@@ -89,7 +91,7 @@ function displayNewEmployee(employee) {
     <td>${employee.name}</td>
     <td>${employee.email}</td>
     <td>${employee.age}</td>
-    <td>${employee.streetAddress}</td>
+    <td>${employee.streetNumber}</td>
     <td>${employee.city}</td>
     <td>${employee.state}</td>
     <td>${employee.postalCode}</td>
@@ -223,7 +225,6 @@ function updateEmployeeFetch(e, id) {
       }
     })
 }
-//TODO NO FUNCIONAN BIEN LOS LISTENERS
 // Displays the updated employee in the main table
 function displayUpdatedEmployee(employee, id) {
   // Creates a row with the newly updated data that is returned from the fetch
