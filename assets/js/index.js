@@ -23,10 +23,10 @@ function createNewRow() {
   const row = document.createElement("tr");
   row.id = "inputFormContainer"
   row.innerHTML = `
-    <td><form action="" method="post" id="form1"><input type="text" name="name" class="form-control" required></form></td>
+    <td><form action="" method="post" id="form1"><input type="text" name="first_name" class="form-control" required></form></td>
     <td><input form="form1" type="text" name="email" class="form-control" required></td>
     <td><input form="form1" type="number" name="age" class="form-control" required></td>
-    <td><input form="form1" type="number" name="streetNumber" class="form-control" required></td>
+    <td><input form="form1" type="number" name="streetAddress" class="form-control" required></td>
     <td><input form="form1" type="text" name="city" class="form-control" required></td>
     <td><input form="form1" type="text" name="state" class="form-control" required></td>
     <td><input form="form1" type="number" name="postalCode" class="form-control" required></td>
@@ -177,7 +177,7 @@ function updateRow(employee, UpdateId) {
   row.id = "inputFormContainer"
   row.innerHTML =
     `
-    <td><form action="" method="post" id="form2"><input value = '${employee.first_name}' type="text" name="name" placeholder = "name" class="form-control" required></td>
+    <td><form action="" method="post" id="form2"><input value = '${employee.first_name}' type="text" name="first_name" placeholder = "name" class="form-control" required></td>
     <td><input value = '${employee.email}' form="form2" type="text" name="email" class="form-control" required></td>
     <td><input value = '${employee.age}' form="form2" type="text" name="age" class="form-control" required></td>
     <td><input value = '${employee.streetAddress}' form="form2" type="text" name="streetAddress" class="form-control" required></td>

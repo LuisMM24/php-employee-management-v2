@@ -97,7 +97,7 @@ class EmployeeModel extends Model
             );
             $query->execute([
                 ":id" => $id,
-                ":first_name" => $employee["name"],
+                ":first_name" => $employee["first_name"],
                 ":email" => $employee["email"],
                 ":age" => $employee["age"],
                 ":streetAddress" => $employee["streetAddress"],
