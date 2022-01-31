@@ -51,13 +51,7 @@ class Employee extends Controller
       echo json_encode($employee);
     }
   }
-  public function deleteEmployee()
-  {
-    if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
-      $id = trim(file_get_contents("php://input"));
-      deleteEmployee($id);
-    }
-  }
+
   // VIEW EMPLOYEE DETAILS in the Employee section
   public function detailsEmployee()
   {

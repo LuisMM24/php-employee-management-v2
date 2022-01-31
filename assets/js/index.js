@@ -1,6 +1,6 @@
 // Fetch URLs
 
-const urlDelete = window.location + "/deleteEmployee";
+const urlDelete = window.location + "/deleteEmployee/";
 const urlAdd = window.location + "/addEmployee";
 const urlUpdate = window.location + "/updateEmployee/";
 //setting dynamic
@@ -127,15 +127,16 @@ function removeDeletedEmployee(id) {
 const deleteBtnModal = document.querySelector("#deleteBtnModal");
 let deleteId;
 deleteBtnModal.addEventListener("click", () => {
-  fetch(urlDelete, {
+  fetch(urlDelete + deleteId, {
       method: "DELETE",
-      body: deleteId
     })
-    .then(response => response.text())
-    .then(data => removeDeletedEmployee(deleteId))
+    .then(response => console.log(response.text()))
+    .then(data => {
+      removeDeletedEmployee(deleteId);
+    });
 })
 
-// UPDATE EMPLOUYEE
+// UPDATE EMPLOYEE
 
 function updateBtnListener() {
   const updateButtons = document.querySelectorAll("button[data-update]");

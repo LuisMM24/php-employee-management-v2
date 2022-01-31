@@ -45,4 +45,14 @@ class Dashboard extends Controller
             }
         }
     }
+    public function deleteEmployee($param = null)
+    {
+      if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+          if ($param !== null){
+              $id= $param[0];
+              $this->model->delete($id);
+              var_dump($this->model->delete($id));
+          }
+      }
+    }
 }

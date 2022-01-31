@@ -1,4 +1,8 @@
 <?php
+class EmployeeModel extends Model{
+    public function __construct(){
+        parent::__construct();
+    }
 
 // Reads the JSON file and returns and array
 function getEmployees()
@@ -13,17 +17,17 @@ function addEmployee(array $newEmployee)
     file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
 }
 
-function deleteEmployee(string $id)
-{
-    $employees = getEmployees();
-    foreach ($employees as $i => $employee) {
-        if ($employee["id"] == $id) {
-            unset($employees[$i]);
-            $employees = array_values($employees);
-        }
-    }
-    file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
-}
+// function deleteEmployee(string $id)
+// {
+//     $employees = getEmployees();
+//     foreach ($employees as $i => $employee) {
+//         if ($employee["id"] == $id) {
+//             unset($employees[$i]);
+//             $employees = array_values($employees);
+//         }
+//     }
+//     file_put_contents('../../resources/employees.json', json_encode($employees, JSON_PRETTY_PRINT));
+// }
 
 function updateEmployee(array $updateEmployee, string $id)
 {
@@ -74,4 +78,5 @@ function getNextIdentifier(array $employeesCollection)
     $lastId = end($employeesCollection)["id"];
     $lastIdplus1 = intval($lastId) + 1;
     return $lastIdplus1;
+}
 }
