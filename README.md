@@ -29,7 +29,9 @@
 The project dependencies are already referenced in the **package-lock.json** file in the root folder. For that reason, it is only necesary to run the following command to allow these to work:
 
 ```sh
-npm instal
+npm install bootstrap
+npm install jquery (optional, used with CDN)
+npm install jsgrid (optional, not used)
 ```
 
 In order to complete/execute this project, the set up of a server environment and PHP interpreter is needed. You need to have at least PHP v7.4 or above to develop this project, which is capable of running PHP to its latest version.
