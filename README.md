@@ -62,6 +62,10 @@ In order to complete/execute this project, the set up of a server environment an
 
 To download or install this project in your local computer, either clone the repository or downdload. In order to run the project, please refer to the **requirements** and **install** section in this README file.
 
+## See the diagram entity/relation
+
+https://drawsql.app/assambler/diagrams/employee-management-v2
+
 ## Usage
 
 ```sh
