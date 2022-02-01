@@ -34,6 +34,7 @@ class Login extends Controller
             if (password_verify($pass, $userData["password"])) {
                 // we usually save in a session variable user id and other user data like name, surname....
                 $_SESSION["email"] = $email;
+                $this->session->startSessionTime();
                 header("location:" . BASE_URL . "employee");
                 // when we check that the email and password is correct, we redirect the user to the dashboard 
             } else {
@@ -54,6 +55,12 @@ class Login extends Controller
     public function notLogged()
     {
         $this->view->setAlert("warning", "You need to log in!");
+        $this->render();
+    }
+    public function timeOut()
+    {
+        $this->session->destroySession();
+        $this->view->setAlert("info", "Your time has expired! (10 minutes)");
         $this->render();
     }
 }

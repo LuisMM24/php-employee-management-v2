@@ -7,7 +7,7 @@ USE manage_employees;
 
 /*    USER TABLE    */
 CREATE TABLE users (
-  userId INT NOT NULL,
+  userId INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(16) NOT NULL,
   password VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
@@ -26,6 +26,7 @@ VALUES
 
 CREATE TABLE employees(
   id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
   first_name VARCHAR(15) NOT NULL,
   last_name VARCHAR(15) NOT NULL,
   email VARCHAR(50) NOT NULL,
@@ -36,13 +37,15 @@ CREATE TABLE employees(
   age INT(3) NOT NULL,
   postalCode INT(15) NOT NULL,
   phoneNumber INT(20) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(userId)
 );
 
 /*    TABLE OF EMPLOYEE */
 INSERT INTO
   employees(
     id,
+    user_id,
     first_name,
     last_name,
     email,
@@ -57,6 +60,7 @@ INSERT INTO
 VALUES
   (
     1,
+    1,
     'Rick',
     'Lei',
     'jackon@network.com',
@@ -70,6 +74,7 @@ VALUES
   ),
   (
     2,
+    1,
     'John D',
     'Doe',
     'jhondoe@foo.com',
@@ -83,6 +88,7 @@ VALUES
   ),
   (
     3,
+    1,
     'Leila',
     'Mills',
     'mills@leila.com',
@@ -96,6 +102,7 @@ VALUES
   ),
   (
     4,
+    1,
     'Richard',
     'Desmond',
     'dismond@foo.com',
@@ -109,6 +116,7 @@ VALUES
   ),
   (
     5,
+    1,
     'Susan',
     'Smith',
     'susanmith@baz.com',
@@ -122,6 +130,7 @@ VALUES
   ),
   (
     6,
+    1,
     'Brad',
     'Simpson',
     'brad@foo.com',
@@ -135,6 +144,7 @@ VALUES
   ),
   (
     7,
+    1,
     'Neil',
     'Walker',
     'walkerneil@baz.com',
@@ -148,6 +158,7 @@ VALUES
   ),
   (
     8,
+    1,
     'Robert',
     'Thomson',
     'jackon@network.com',
@@ -161,6 +172,7 @@ VALUES
   ),
   (
     9,
+    1,
     'Ivan',
     'Gunchev',
     'ivan@ivan.com',

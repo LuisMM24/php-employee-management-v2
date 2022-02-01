@@ -22,7 +22,21 @@ class Session
         }
     }
 
+    public function isSessionExpired()
+    {
+        if (isset($_SESSION["login_time"])) {
+            if (time() - $_SESSION["login_time"] >= 600) {
+                return true;
+            }
+        } else {
 
+            return false;
+        }
+    }
+    public function startSessionTime()
+    {
+        $_SESSION["login_time"] = time();
+    }
     public function destroySession()
     {
 

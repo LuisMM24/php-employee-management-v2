@@ -6,11 +6,17 @@ class Employee extends Controller
     {
         parent::__construct();
         $this->session->checkSessionDashboard();
+        //check is session is timed out
+        print_r($_SESSION["login_time"] - time());
     }
     public function render()
     {
-        $this->view->employees = $this->model->get();
-        $this->view->render("dashboard/index");
+        if ($this->session->isSessionExpired()) {
+            $this->view->location("login/timeOut");
+        } else {
+            $this->view->employees = $this->model->get();
+            $this->view->render("dashboard/index");
+        }
     }
 
     public function getEmployee($param = null)
@@ -85,7 +91,7 @@ class Employee extends Controller
     {
         $this->response = ["status" => "$status"];
     }
-    public function consultEmployee($params = null)
+    public function consult($params = null)
     {
 
         if ($params !== null) {

@@ -61,7 +61,7 @@
             <td><?= $employee["postalCode"] ?></td>
             <td><?= $employee["phoneNumber"] ?></td>
             <td class="d-flex justify-content-between">
-              <a href="<?= BASE_URL ?>employee/consultEmployee/<?= $employee["id"] ?>" class="btn btn-outline-info"><i class="far fa-eye" data-viewId=<?= $employee["id"] ?>></i></a>
+              <a href="<?= BASE_URL ?>employee/consult/<?= $employee["id"] ?>" class="btn btn-outline-info"><i class="far fa-eye" data-viewId=<?= $employee["id"] ?>></i></a>
               <button data-update='<?= $employee["id"] ?>' id="editBtn" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i></button>
               <a data-delete='<?= $employee["id"] ?>' class="btn btn-outline-danger" href="#deleteModal" data-toggle="modal"><i class="far fa-trash-alt"></i></a>
             </td>
