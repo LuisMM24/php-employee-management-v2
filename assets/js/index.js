@@ -84,14 +84,14 @@ function addEmployeeFetch(e) {
 }
 
 function displayNewEmployee(employee) {
-
+  console.log(employee);
   // Creates a new row in the main table with all the data returned from the fetch and appends it to the table
   let row = document.createElement("tr")
   row.innerHTML = `
-    <td>${employee.name}</td>
+    <td>${employee.first_name}</td>
     <td>${employee.email}</td>
     <td>${employee.age}</td>
-    <td>${employee.streetNumber}</td>
+    <td>${employee.streetAddress}</td>
     <td>${employee.city}</td>
     <td>${employee.state}</td>
     <td>${employee.postalCode}</td>
@@ -137,7 +137,6 @@ function removeDeletedEmployee(id) {
 // Delete confirmation modal
 const deleteBtnModal = document.querySelector("#deleteBtnModal");
 let deleteId;
-console.log(deleteId);
 deleteBtnModal.addEventListener("click", () => {
   fetch(urlDelete + deleteId, {
       method: "DELETE",
@@ -228,10 +227,12 @@ function updateEmployeeFetch(e, id) {
       body: updateEmployeeJSON,
       method: 'PUT',
     })
-    .then(response => {
-      if (response.status == 200) {
+    .then(response => response.json())
+    .then(data => {
+      if (data["status"] == "success") {
         displayUpdatedEmployee(employee, id)
       }
+
     })
 }
 // Displays the updated employee in the main table
@@ -239,7 +240,7 @@ function displayUpdatedEmployee(employee, id) {
   // Creates a row with the newly updated data that is returned from the fetch
   let row = document.createElement("tr")
   row.innerHTML = `
-  <td>${employee.name}</td>
+  <td>${employee.first_name}</td>
   <td>${employee.email}</td>
   <td>${employee.age}</td>
   <td>${employee.streetAddress}</td>

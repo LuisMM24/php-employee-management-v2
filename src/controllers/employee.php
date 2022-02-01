@@ -7,16 +7,15 @@ class Employee extends Controller
         parent::__construct();
         $this->session->checkSessionDashboard();
         //check is session is timed out
-        print_r($_SESSION["login_time"] - time());
+        if ($this->session->isSessionExpired()) {
+            $this->view->location("login/timeOut");
+        }
     }
     public function render()
     {
-        if ($this->session->isSessionExpired()) {
-            $this->view->location("login/timeOut");
-        } else {
-            $this->view->employees = $this->model->get();
-            $this->view->render("dashboard/index");
-        }
+        //load all employees (dashboard)
+        $this->view->employees = $this->model->get();
+        $this->view->render("dashboard/index");
     }
 
     public function getEmployee($param = null)
@@ -57,8 +56,10 @@ class Employee extends Controller
                 $id = $param[0];
                 $this->employee = json_decode(file_get_contents('php://input'), true);
                 $this->response = $this->model->updateFromDash($this->employee, $id);
-                if ($this->response === true) {
-                    echo "true";
+                if ($this->response == true) {
+                    $this->setResponse("success");
+                    $this->response = json_encode($this->response);
+                    echo $this->response;
                 }
             }
         }
@@ -68,8 +69,12 @@ class Employee extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
             if ($param !== null) {
                 $id = $param[0];
-                $this->model->delete($id);
-                var_dump($this->model->delete($id));
+                $this->response = $this->model->delete($id);
+                if ($this->response == true) {
+                    $this->setResponse("success");
+                    $this->employee = json_encode($this->response);
+                    echo $this->response;
+                }
             }
         }
     }

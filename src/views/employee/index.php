@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light container-xl">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../assets/img/logo.jpg" alt="" width="25">
+                <img src="<?= ASSETS ?>img/logo.jpg" alt="" width="25">
             </a>
             <a class="navbar-brand" href="">Employees Management</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
                     </li>
                 </ul>
             </div>
-            <a class="link-primary" href="./library/loginController.php?logout=1">Log out</a>
+            <a class="link-primary" href="<?= BASE_URL ?>login/logOut">Log out</a>
         </div>
     </nav>
 

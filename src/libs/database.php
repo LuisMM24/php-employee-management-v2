@@ -32,13 +32,11 @@ class Database
             ];
 
             $pdo = new PDO($connection, $this->user, $this->password, $options);
-
             return $pdo;
         } catch (PDOException $e) {
             //echo 'Connection error: ' . $e->getMessage();
             //This error should be sended to the controller and load a failure VIEW
-            $this->error = "Error connecting to the database";
-            //include VIEWS . '/error/dbError.php';
+            $this->error = "Error to connecting to the database";
         }
     }
 }

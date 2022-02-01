@@ -107,7 +107,7 @@ class EmployeeModel extends Model
             ]);
             return true;
         } catch (PDOException $e) {
-            return $e;
+            return false;
         }
     }
     public function delete($id)
@@ -117,19 +117,22 @@ class EmployeeModel extends Model
             $query->execute([":id" => $id]);
             return true;
         } catch (PDOException $e) {
-            return $e;
+            return false;
         }
     }
 
     public function add($employee)
     {
         try {
+            //if the user creates a new one from dash will be unset
             if (!isset($employee["last_name"])) {
                 $employee["last_name"] = "empty";
                 $employee["gender"] = "empty";
             }
+            //we put user_id= 1 because we didn't have time to set dynamic.
             $query = $this->db->connect()->prepare(
-                "INSERT INTO employees (first_name,last_name,email,age,streetAddress,city,gender,state,postalCode,phoneNumber) VALUES(
+                "INSERT INTO employees (user_id,first_name,last_name,email,age,streetAddress,city,gender,state,postalCode,phoneNumber) VALUES(
+                    1,
                      :first_name,
                      :last_name,
                      :email,
